@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.stegasafe.crypto.CryptoEngineTest
 -------------------------------------------------------------------------------
-Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.346 s -- in com.stegasafe.crypto.CryptoEngineTest
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.546 s -- in com.stegasafe.crypto.CryptoEngineTest

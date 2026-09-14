@@ -104,6 +104,31 @@ http://localhost:8080
 
 ---
 
+## 💻 Windows Desktop Application
+
+StegaSafe includes a native Windows desktop GUI application built with Java Swing and styled with the modern **FlatLaf** Dark/Light design system. It uses direct in-process calls to the steganography and cryptography engines without requiring a web browser or server.
+
+### Features
+- **Modern Flat UI**: Cyberpunk dark theme with one-click light theme toggle.
+- **Drag & Drop**: Drop carrier images and encoded PNG files directly into the window.
+- **Interactive Studios**:
+  - 🔒 **Encode Studio**: Live capacity meters, quick sample presets (Tamil, Flag, API Keys), password encryption toggle, and one-click test image generator.
+  - 🔓 **Decode Studio**: Password-protected extraction, AEAD tag verification, payload stats, and one-click clipboard copy.
+  - 📊 **Capacity Inspector**: Resolution, pixel density, raw bit capacity, and maximum usable payload calculator.
+  - ℹ️ **About & Security Specs**: Complete mathematical and architectural reference.
+
+### How to Run the Desktop App
+1. **One-click silent launch (no black CMD window)**:
+   Double-click `StegaSafe-Desktop.vbs` in the project root.
+2. **Via Batch Script**:
+   Double-click or run `launch-desktop.bat` from terminal.
+3. **From Command Line**:
+   ```powershell
+   java -Dloader.main=com.stegasafe.desktop.StegaSafeDesktopApp -cp "target\stegasafe-1.0.0.jar" org.springframework.boot.loader.launch.PropertiesLauncher
+   ```
+
+---
+
 ## 🧪 Running Automated Tests
 
 The application includes comprehensive unit and integration tests covering AES-GCM crypto, LSB embedding/decoding, Tamil/Unicode handling, capacity overflows, and MockMvc REST endpoints.
