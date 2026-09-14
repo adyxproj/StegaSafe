@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.stegasafe.controller.SteganographyControllerTest
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.385 s -- in com.stegasafe.controller.SteganographyControllerTest

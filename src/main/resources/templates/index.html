@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StegaSafe - Modern Secure Image Steganography</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" href="/css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body th:data-initial-tab="${activeTab != null ? activeTab : 'dashboard'}">
+
+    <!-- Top Navigation Bar -->
+    <nav class="navbar">
+        <a href="javascript:void(0)" onclick="switchTab('dashboard')" class="brand">
+            <div class="brand-icon">
+                <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
+            </div>
+            <span>StegaSafe</span>
+        </a>
+
+        <ul class="nav-links">
+            <li><button class="nav-btn active" data-tab="dashboard">Dashboard</button></li>
+            <li><button class="nav-btn" data-tab="encode">Encode</button></li>
+            <li><button class="nav-btn" data-tab="decode">Decode</button></li>
+            <li><button class="nav-btn" data-tab="capacity">Capacity</button></li>
+            <li><button class="nav-btn" data-tab="about">About & Guide</button></li>
+            <li>
+                <button class="theme-toggle-btn" id="themeToggleBtn" title="Toggle Light/Dark Theme">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+                    </svg> Light Mode
+                </button>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Main Application Container -->
+    <main class="container">
+
+        <!-- ================================================================= -->
+        <!-- TAB 1: DASHBOARD -->
+        <!-- ================================================================= -->
+        <section id="dashboard" class="tab-content active">
+            <div class="hero">
+                <div class="hero-badge">
+                    <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg> MILITARY-GRADE AES-256-GCM + LSB STEGANOGRAPHY
+                </div>
+                <h1>Hide Secret Messages in Plain Sight with <span class="gradient-text">StegaSafe</span></h1>
+                <p>An advanced, cybersecurity-engineered steganography platform. Conceal sensitive data, passwords, and multi-language messages inside digital images without perceptual distortion.</p>
+                <div class="hero-actions">
+                    <button class="btn btn-primary" onclick="switchTab('encode')">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                        </svg> Encode Secret Message
+                    </button>
+                    <button class="btn btn-secondary" onclick="switchTab('decode')">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                        </svg> Extract Hidden Message
+                    </button>
+                    <button class="btn btn-secondary" onclick="switchTab('capacity')">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                        </svg> Analyze Capacity
+                    </button>
+                </div>
+            </div>
+
+            <!-- Features Grid -->
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                        </svg>
+                    </div>
+                    <h3>AES-256-GCM Encryption</h3>
+                    <p>Secret messages can be locked with a password using 256-bit AES authenticated encryption (GCM mode) and PBKDF2 key derivation (65,536 iterations).</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                        </svg>
+                    </div>
+                    <h3>Lossless LSB Steganography</h3>
+                    <p>Encodes binary bits sequentially into the least significant bit of Red, Green, and Blue color channels, ensuring zero noticeable visual degradation.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <h3>Tamper & Integrity Proof</h3>
+                    <p>Binary magic headers (<code>STEG</code>) and CRC32 / AEAD authentication tags verify data integrity and prevent unauthorized or corrupted extractions.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/>
+                        </svg>
+                    </div>
+                    <h3>Full Unicode & Tamil Support</h3>
+                    <p>Flawlessly encode and decode any character set, including Tamil (<code>வணக்கம்</code>), Hindi, Japanese, Cyrillic, and emojis, without data loss.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                        </svg>
+                    </div>
+                    <h3>Live Capacity Metering</h3>
+                    <p>Inspects image pixel density to calculate max message payload in real-time, preventing overflow and providing immediate capacity feedback.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                        </svg>
+                    </div>
+                    <h3>Zero-Persistence Privacy</h3>
+                    <p>All operations are processed strictly in RAM streams. Neither images, passwords, nor plaintexts are ever written to disk or recorded in server logs.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================= -->
+        <!-- TAB 2: ENCODE STUDIO -->
+        <!-- ================================================================= -->
+        <section id="encode" class="tab-content">
+            <div class="studio-grid">
+                <!-- Left Panel: Carrier Image Upload & Capacity -->
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <h2 class="panel-title">
+                            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg> Carrier Image
+                        </h2>
+                        <span style="font-size:0.8rem; color:var(--text-sub)">Step 1 of 2</span>
+                    </div>
+
+                    <div class="dropzone" id="encodeDropzone">
+                        <div class="dropzone-icon">
+                            <svg width="40" height="40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+                            </svg>
+                        </div>
+                        <p class="dropzone-text">Drag & drop your image here, or click to browse</p>
+                        <p class="dropzone-sub">Supports PNG, JPG, JPEG, BMP (Lossless PNG exported)</p>
+                        <input type="file" id="encodeFileInput" class="file-input" accept="image/png, image/jpeg, image/bmp">
+                    </div>
+
+                    <!-- Quick Sample Carrier Generator -->
+                    <div style="display:flex; justify-content:space-between; align-items:center; background:var(--bg-input); border:1px solid var(--border-color); border-radius:10px; padding:0.75rem 1rem; margin-top:0.75rem;">
+                        <div>
+                            <div style="font-size:0.85rem; font-weight:600;">Need a test image?</div>
+                            <div style="font-size:0.75rem; color:var(--text-sub);">Generate a carrier image in 1 click</div>
+                        </div>
+                        <button type="button" class="btn btn-secondary" style="padding:0.35rem 0.8rem; font-size:0.8rem;" onclick="generateSampleCarrier()">
+                            ⚡ Generate Test Image
+                        </button>
+                    </div>
+
+                    <!-- Image Preview & Live Specs -->
+                    <div class="preview-container" id="encodePreviewContainer">
+                        <div class="preview-img-wrapper">
+                            <img id="encodePreviewImg" alt="Carrier Preview">
+                        </div>
+                        <div class="preview-meta">
+                            <div class="meta-box">
+                                <span class="meta-label">Dimensions</span>
+                                <div class="meta-val" id="encodeResolutionMeta">-- × --</div>
+                            </div>
+                            <div class="meta-box">
+                                <span class="meta-label">Max Usable Capacity</span>
+                                <div class="meta-val" id="encodeMaxCapMeta" style="color:var(--primary)">-- KB</div>
+                            </div>
+                        </div>
+
+                        <!-- Capacity Usage Meter -->
+                        <div class="capacity-meter">
+                            <div class="capacity-meter-header">
+                                <span style="color:var(--text-muted)">Payload Storage Utilized</span>
+                                <span id="encodeCapacityText" style="font-family:var(--font-mono); font-size:0.8rem;">0 / 0 bytes (0%)</span>
+                            </div>
+                            <div class="progress-bar-bg">
+                                <div class="progress-bar-fill" id="encodeCapacityFill"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Panel: Secret Message & Encryption -->
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <h2 class="panel-title">
+                            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                            </svg> Secret Message Payload
+                        </h2>
+                        <span style="font-size:0.8rem; color:var(--text-sub)">Step 2 of 2</span>
+                    </div>
+
+                    <div class="form-group">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+                            <label class="form-label" for="encodeMessageInput" style="margin-bottom:0;">Message Text</label>
+                            <div style="font-size:0.75rem; color:var(--text-sub); font-family:var(--font-mono);">
+                                <span id="encodeCharCounter">0 chars</span> | <span id="encodeByteCounter">0 bytes</span>
+                            </div>
+                        </div>
+                        <textarea class="form-control" id="encodeMessageInput" placeholder="Enter confidential message, credentials, or Unicode text to hide..."></textarea>
+                        
+                        <!-- Quick Test Presets -->
+                        <div class="preset-group">
+                            <span style="font-size:0.75rem; color:var(--text-sub); align-self:center;">Presets:</span>
+                            <button type="button" class="preset-pill" onclick="insertPreset('flag')">CTF Flag</button>
+                            <button type="button" class="preset-pill" onclick="insertPreset('tamil')">Tamil Greeting (வணக்கம்)</button>
+                            <button type="button" class="preset-pill" onclick="insertPreset('credentials')">API Token</button>
+                        </div>
+                    </div>
+
+                    <!-- Password Toggle -->
+                    <label class="toggle-wrapper" for="encodePasswordToggle">
+                        <div class="toggle-info">
+                            <svg width="18" height="18" fill="none" stroke="var(--primary)" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                            </svg>
+                            <div>
+                                <div style="font-size:0.9rem; font-weight:600;">Enable AES-256-GCM Encryption</div>
+                                <div style="font-size:0.75rem; color:var(--text-sub);">Requires password to extract message</div>
+                            </div>
+                        </div>
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="encodePasswordToggle">
+                            <span class="toggle-slider"></span>
+                        </div>
+                    </label>
+
+                    <!-- Password Fields (Initially Hidden) -->
+                    <div id="encodePasswordGroup" style="display:none; animation:fadeIn 0.2s ease;">
+                        <div class="form-group">
+                            <label class="form-label" for="encodePasswordInput">Passphrase</label>
+                            <div class="input-with-action">
+                                <input type="password" class="form-control" id="encodePasswordInput" placeholder="Enter strong encryption password">
+                                <button type="button" class="action-btn-inline" onclick="togglePasswordVisibility('encodePasswordInput', this)" title="Show/Hide Password">
+                                    <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="encodePasswordConfirm">Confirm Passphrase</label>
+                            <div class="input-with-action">
+                                <input type="password" class="form-control" id="encodePasswordConfirm" placeholder="Re-enter password to verify">
+                                <button type="button" class="action-btn-inline" onclick="togglePasswordVisibility('encodePasswordConfirm', this)" title="Show/Hide Password">
+                                    <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary" id="encodeSubmitBtn" style="width:100%; margin-top:0.5rem;" disabled>
+                        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                        </svg> Embed Message into Image
+                    </button>
+                </div>
+            </div>
+
+            <!-- Result Card -->
+            <div class="result-card" id="encodeResultCard">
+                <div class="result-header">
+                    <div style="display:flex; align-items:center; gap:0.6rem;">
+                        <svg width="22" height="22" fill="none" stroke="var(--accent-green)" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <h3 style="font-size:1.15rem; font-weight:700;">Steganographic Encoding Successful!</h3>
+                    </div>
+                    <button class="btn btn-primary" id="downloadEncodedBtn">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                        </svg> Download PNG Image
+                    </button>
+                </div>
+                <div style="display:flex; gap:1.5rem; align-items:center; flex-wrap:wrap;">
+                    <div style="width:120px; height:90px; border-radius:8px; overflow:hidden; background:#000; border:1px solid var(--border-color); display:flex; align-items:center; justify-content:center;">
+                        <img id="encodeResultThumb" style="max-width:100%; max-height:100%; object-fit:contain;" alt="Encoded PNG">
+                    </div>
+                    <div>
+                        <p id="encodeResultMeta" style="font-size:0.9rem; color:var(--text-muted); margin-bottom:0.5rem;"></p>
+                        <p style="font-size:0.8rem; color:var(--text-sub);">The secret message is invisibly embedded into the least significant bits. Always share or store this PNG file to preserve the payload.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================= -->
+        <!-- TAB 3: DECODE STUDIO -->
+        <!-- ================================================================= -->
+        <section id="decode" class="tab-content">
+            <div class="studio-grid">
+                <!-- Left Panel: Carrier Image Upload -->
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <h2 class="panel-title">
+                            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg> Encoded Image File
+                        </h2>
+                    </div>
+
+                    <div class="dropzone" id="decodeDropzone">
+                        <div class="dropzone-icon">
+                            <svg width="40" height="40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+                            </svg>
+                        </div>
+                        <p class="dropzone-text">Drag & drop your encoded PNG image</p>
+                        <p class="dropzone-sub">Upload image containing StegaSafe binary header</p>
+                        <input type="file" id="decodeFileInput" class="file-input" accept="image/png">
+                    </div>
+
+                    <div class="preview-container" id="decodePreviewContainer">
+                        <div class="preview-img-wrapper">
+                            <img id="decodePreviewImg" alt="Encoded File Preview">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Panel: Password & Extraction Trigger -->
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <h2 class="panel-title">
+                            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                            </svg> Message Extraction
+                        </h2>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="decodePasswordInput">Decryption Passphrase (If Protected)</label>
+                        <div class="input-with-action">
+                            <input type="password" class="form-control" id="decodePasswordInput" placeholder="Leave empty if message was encoded without password">
+                            <button type="button" class="action-btn-inline" onclick="togglePasswordVisibility('decodePasswordInput', this)" title="Show/Hide Password">
+                                <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                            </button>
+                        </div>
+                        <p style="font-size:0.75rem; color:var(--text-sub); margin-top:0.4rem;">If the image is encrypted with AES-256-GCM, entering an incorrect passphrase will fail authentication tag validation.</p>
+                    </div>
+
+                    <div style="display:flex; gap:0.75rem; margin-top:1.5rem;">
+                        <button class="btn btn-primary" id="decodeSubmitBtn" style="flex:1;" disabled>
+                            <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                            </svg> Extract Secret Message
+                        </button>
+                        <button class="btn btn-secondary" id="decodeResetBtn" title="Reset View">
+                            <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                            </svg> Reset
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Decoded Output Panel -->
+            <div class="result-card" id="decodeResultCard">
+                <div class="result-header">
+                    <div style="display:flex; align-items:center; gap:0.75rem;">
+                        <span id="decodeBadgeStatus" class="result-badge">Status</span>
+                        <span id="decodeStatsText" style="font-size:0.825rem; color:var(--text-sub); font-family:var(--font-mono);"></span>
+                    </div>
+                    <button class="btn btn-secondary" id="decodeCopyBtn" style="padding:0.4rem 0.8rem; font-size:0.85rem;">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/>
+                        </svg> Copy Message
+                    </button>
+                </div>
+                <textarea class="output-textarea" id="decodeOutputText" readonly></textarea>
+            </div>
+        </section>
+
+        <!-- ================================================================= -->
+        <!-- TAB 4: CAPACITY ANALYZER -->
+        <!-- ================================================================= -->
+        <section id="capacity" class="tab-content">
+            <div class="panel-card" style="max-width:850px; margin:0 auto;">
+                <div class="panel-header">
+                    <h2 class="panel-title">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                        </svg> Image Steganography Capacity Inspector
+                    </h2>
+                </div>
+                <p style="color:var(--text-muted); font-size:0.95rem; margin-bottom:1.5rem;">
+                    Upload any digital image to calculate its theoretical bit capacity and exact payload thresholds before encoding.
+                </p>
+
+                <div class="dropzone" id="capacityDropzone">
+                    <div class="dropzone-icon">
+                        <svg width="40" height="40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+                        </svg>
+                    </div>
+                    <p class="dropzone-text">Drop image to inspect storage capacity</p>
+                    <p class="dropzone-sub">Inspect PNG, JPG, JPEG, or BMP dimensions and bit counts</p>
+                    <input type="file" id="capacityFileInput" class="file-input" accept="image/*">
+                </div>
+
+                <div class="result-card" id="capacityResultPanel">
+                    <div style="display:grid; grid-template-columns:120px 1fr; gap:1.5rem; align-items:center; margin-bottom:1.5rem;">
+                        <div style="height:90px; background:#000; border-radius:8px; overflow:hidden; display:flex; align-items:center; justify-content:center; border:1px solid var(--border-color);">
+                            <img id="capacityPreviewImg" style="max-width:100%; max-height:100%; object-fit:contain;" alt="Image Preview">
+                        </div>
+                        <div>
+                            <h3 id="capFileName" style="font-size:1.1rem; font-weight:700;">--</h3>
+                            <p style="font-size:0.85rem; color:var(--text-sub);">File Size: <span id="capFileSize" style="color:var(--text-main); font-weight:600;">--</span></p>
+                        </div>
+                    </div>
+
+                    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1rem;">
+                        <div class="meta-box">
+                            <span class="meta-label">Dimensions</span>
+                            <div class="meta-val" id="capDimensions">--</div>
+                        </div>
+                        <div class="meta-box">
+                            <span class="meta-label">Total Pixels</span>
+                            <div class="meta-val" id="capTotalPixels">--</div>
+                        </div>
+                        <div class="meta-box">
+                            <span class="meta-label">Raw Bit Capacity</span>
+                            <div class="meta-val" id="capRawBytes">--</div>
+                        </div>
+                        <div class="meta-box">
+                            <span class="meta-label">Max Usable (Plaintext)</span>
+                            <div class="meta-val" id="capMaxPlain" style="color:var(--accent-green)">--</div>
+                        </div>
+                        <div class="meta-box">
+                            <span class="meta-label">Max Usable (AES-256)</span>
+                            <div class="meta-val" id="capMaxEnc" style="color:var(--primary)">--</div>
+                        </div>
+                        <div class="meta-box">
+                            <span class="meta-label">Formatted Capacity</span>
+                            <div class="meta-val" id="capFormatted" style="color:var(--accent-purple)">--</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================= -->
+        <!-- TAB 5: ABOUT & SECURITY GUIDE -->
+        <!-- ================================================================= -->
+        <section id="about" class="tab-content">
+            <div class="panel-card" style="max-width:900px; margin:0 auto;">
+                <div class="panel-header">
+                    <h2 class="panel-title">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg> Steganography & Architecture Guide
+                    </h2>
+                </div>
+
+                <h3 style="font-size:1.2rem; margin:1.25rem 0 0.5rem; color:var(--primary);">1. Steganography vs. Cryptography</h3>
+                <p style="color:var(--text-muted); font-size:0.95rem; margin-bottom:1rem;">
+                    <strong>Cryptography</strong> scrambles a message so that eavesdroppers cannot read it, but the ciphertext itself is conspicuous and signals that a secret exists. 
+                    <strong>Steganography</strong> hides the very existence of the communication by embedding secret bits inside innocent media. 
+                    <strong>StegaSafe</strong> unifies both techniques: the message is first encrypted using authenticated AES-256-GCM, and then invisibly woven into digital pixel channels.
+                </p>
+
+                <h3 style="font-size:1.2rem; margin:1.5rem 0 0.5rem; color:var(--primary);">2. How Least Significant Bit (LSB) Encoding Works</h3>
+                <p style="color:var(--text-muted); font-size:0.95rem;">
+                    In standard 24-bit TrueColor images, each pixel consists of 3 bytes representing Red, Green, and Blue channels (0 to 255). 
+                    The least significant bit (LSB) of each 8-bit color component has a weight of only 1/256. Modifying this bit produces a color shift of &plusmn;1, which is completely imperceptible to the human eye.
+                </p>
+
+                <!-- LSB Visual Diagram -->
+                <div class="bit-diagram">
+                    <div class="channel-card red">
+                        <div style="font-weight:700; color:#ef4444; font-size:0.9rem;">Red Channel (Byte 1)</div>
+                        <div class="bit-sequence">
+                            <span>1</span><span>1</span><span>0</span><span>0</span><span>1</span><span>0</span><span>1</span><span class="lsb">1</span>
+                        </div>
+                        <div style="font-size:0.75rem; color:var(--text-sub); margin-top:0.3rem;">LSB embeds Bit 0</div>
+                    </div>
+                    <div class="channel-card green">
+                        <div style="font-weight:700; color:#10b981; font-size:0.9rem;">Green Channel (Byte 2)</div>
+                        <div class="bit-sequence">
+                            <span>1</span><span>0</span><span>1</span><span>1</span><span>0</span><span>1</span><span>0</span><span class="lsb">0</span>
+                        </div>
+                        <div style="font-size:0.75rem; color:var(--text-sub); margin-top:0.3rem;">LSB embeds Bit 1</div>
+                    </div>
+                    <div class="channel-card blue">
+                        <div style="font-weight:700; color:#3b82f6; font-size:0.9rem;">Blue Channel (Byte 3)</div>
+                        <div class="bit-sequence">
+                            <span>0</span><span>1</span><span>1</span><span>0</span><span>1</span><span>1</span><span>1</span><span class="lsb">1</span>
+                        </div>
+                        <div style="font-size:0.75rem; color:var(--text-sub); margin-top:0.3rem;">LSB embeds Bit 2</div>
+                    </div>
+                </div>
+
+                <h3 style="font-size:1.2rem; margin:1.5rem 0 0.5rem; color:var(--primary);">3. Why PNG is Strictly Required for Export</h3>
+                <p style="color:var(--text-muted); font-size:0.95rem; margin-bottom:1rem;">
+                    JPEG utilizes lossy Discrete Cosine Transform (DCT) compression and chroma subsampling, which completely recalculates and destroys high-frequency details (including least significant bits). 
+                    PNG, in contrast, utilizes lossless DEFLATE compression, which guarantees 100% bit-exact preservation of pixel values across saves, transfers, and decodes.
+                </p>
+
+                <h3 style="font-size:1.2rem; margin:1.5rem 0 0.5rem; color:var(--primary);">4. Security Specifications</h3>
+                <ul style="color:var(--text-muted); font-size:0.95rem; margin-left:1.5rem; line-height:1.8;">
+                    <li><strong>Symmetric Encryption:</strong> AES-256 in Galois/Counter Mode (GCM) with a 128-bit authentication tag.</li>
+                    <li><strong>Key Derivation:</strong> PBKDF2 with HMAC-SHA256 and 65,536 iterations.</li>
+                    <li><strong>Randomized Salt & IV:</strong> 16-byte cryptographic salt and 12-byte initialization vector generated with <code>java.security.SecureRandom</code> for every encoding session.</li>
+                    <li><strong>Integrity Check:</strong> CRC32 verification for unencrypted payloads; AES-GCM AEAD authentication tag for encrypted payloads.</li>
+                    <li><strong>Encoding Header:</strong> 4-byte <code>STEG</code> magic header + version byte + encryption flag.</li>
+                </ul>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Toast Notification Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Application Footer -->
+    <footer>
+        <p>StegaSafe &copy; 2026 &mdash; Built with Java 21, Spring Boot 3 &amp; AES-256-GCM. Designed for modern cybersecurity education.</p>
+    </footer>
+
+    <!-- Client Script -->
+    <script th:src="@{/js/app.js}" src="/js/app.js"></script>
+</body>
+</html>

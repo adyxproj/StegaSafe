@@ -1,0 +1,3 @@
+com\stegasafe\crypto\CryptoEngineTest.class
+com\stegasafe\controller\SteganographyControllerTest.class
+com\stegasafe\stego\LsbSteganographyServiceTest.class
